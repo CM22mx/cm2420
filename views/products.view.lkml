@@ -39,4 +39,29 @@ view: products {
     type: count
     drill_fields: [id, item_name, inventory_items.count]
   }
+
+  parameter: usr_dim_selection {
+    label: "User Dim Selection (spanish)"
+    view_label: "Products"
+    #description: "Choose which cohort you would like to break out the metrics by."
+    type: string
+    default_value: "Marca"
+    allowed_value: {value: "Marca"}
+    allowed_value: {value: "Categoria"}
+    allowed_value: {value: "Departamento"}
+  }
+
+  dimension: usr_dim__display{
+    label: "User Dim Selection (spanish) Display"
+    view_label: "Products"
+    label_from_parameter: usr_dim_selection
+    type: string
+    sql:
+    CASE WHEN ({% parameter usr_dim_selection %} = 'Marca') THEN ${TABLE}.brand
+         WHEN ({% parameter usr_dim_selection %} = 'Categoria') THEN ${TABLE}.category
+         WHEN ({% parameter usr_dim_selection %} = 'Departamento') THEN ${TABLE}.department
+
+    END;;
+  }
+
 }

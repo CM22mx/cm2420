@@ -27,6 +27,14 @@ view: flights {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.dep_time ;;
   }
+
+  dimension: dep2 {
+    type: date_time
+    #timeframes: [raw, time, date, week, month, quarter, year]
+    sql: ${TABLE}.dep_time ;;
+  }
+
+
   dimension: destination {
     type: string
     sql:

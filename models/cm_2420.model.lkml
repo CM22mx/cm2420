@@ -94,18 +94,18 @@ explore: hundred_million_orders_wide {
     sql_on: ${orders.user_id} = ${users.id} ;;
     relationship: many_to_one
   }
-}
+#}
 
-explore: incremental_pdts_test {}
+#explore: incremental_pdts_test {}
 
-explore: ints {}
+#explore: ints {}
 
-explore: inventory_items {
-  join: products {
-    type: left_outer
-    sql_on: ${inventory_items.product_id} = ${products.id} ;;
-    relationship: many_to_one
-  }
+#explore: inventory_items {
+#  join: products {
+#    type: left_outer
+#    sql_on: ${inventory_items.product_id} = ${products.id} ;;
+#    relationship: many_to_one
+#  }
 }
 
 explore: jdbc_connection_usage {}
