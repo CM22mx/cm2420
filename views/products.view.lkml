@@ -52,7 +52,7 @@ view: products {
   }
 
   dimension: usr_dim__display{
-    label: "User Dim Selection (spanish) Display"
+    label: "If Dim Selection (spanish) Display"
     view_label: "Products"
     label_from_parameter: usr_dim_selection
     type: string
@@ -60,8 +60,17 @@ view: products {
     CASE WHEN ({% parameter usr_dim_selection %} = 'Marca') THEN ${TABLE}.brand
          WHEN ({% parameter usr_dim_selection %} = 'Categoria') THEN ${TABLE}.category
          WHEN ({% parameter usr_dim_selection %} = 'Departamento') THEN ${TABLE}.department
+      END;;
 
-    END;;
+ #sql:
+ #   {% if usr_dim_selection._parameter_value == 'Marca' %}
+  #  ${TABLE}.brand
+  #  {% elsif usr_dim_selection._parameter_value == 'Categoria' %}
+  #  ${TABLE}.category
+  #  {% elsif usr_dim_selection._parameter_value == 'Departamento' %}
+  #  ${TABLE}.department
+  #  {% endif %};;
+
   }
 
 }
