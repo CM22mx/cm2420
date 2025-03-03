@@ -1,6 +1,6 @@
 view: order_items {
   sql_table_name: demo_db.order_items ;;
-  drill_fields: [id]
+#  drill_fields: [id]
 
   dimension: id {
     primary_key: yes
@@ -36,6 +36,33 @@ view: order_items {
   }
   measure: count {
     type: count
-    drill_fields: [id, orders.id, inventory_items.id]
+  #  drill_fields: [id, orders.id, inventory_items.id]
+  }
+
+  parameter: client_cohort_selection {
+    label: "Client Cohort Selection"
+    view_label: "Client"
+    description: "Choose which cohort you would like to break out the metrics by."
+    type: string
+    default_value: "User Name"
+    allowed_value: {value: "User Name"}
+    allowed_value: {value: "User City"}
+    allowed_value: {value: "User Zipcode"}
+    allowed_value: {value: "User Country"}
+    allowed_value: {value: "User Gender"}
+  }
+
+  dimension: client_cohort_display{
+    label: "Client Cohort Display"
+    view_label: "Client"
+    label_from_parameter: client_cohort_selection
+    type: string
+    sql:
+    CASE WHEN ({% parameter client_cohort_selection %} = 'User Name') THEN ${users.first_name}
+         WHEN ({% parameter client_cohort_selection %} = 'User City') THEN ${users.city}
+         WHEN ({% parameter client_cohort_selection %} = 'User Zipcode') THEN ${users.zip}
+         WHEN ({% parameter client_cohort_selection %} = 'User Country') THEN ${users.country}
+         WHEN ({% parameter client_cohort_selection %} = 'User Gender') THEN ${users.gender}
+    END;;
   }
 }
