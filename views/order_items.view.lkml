@@ -31,6 +31,7 @@ view: order_items {
     timeframes: [raw, time, date, week, month, quarter, year]
     sql: ${TABLE}.returned_at ;;
   }
+
   dimension: sale_price {
     type: number
     sql: ${TABLE}.sale_price ;;
